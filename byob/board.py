@@ -1,6 +1,6 @@
 import copy
-import datetime
 import random
+import time
 
 
 class Game:
@@ -25,17 +25,22 @@ class Game:
         self._current_prompt = self._prompts.pop()
 
     def start_timer(self):
-        self._timer_timestamp = datetime.datetime.utcnow()
+        self._timer_timestamp = time.time()
 
     @property
     def current_prompt(self):
         return self._current_prompt
 
     def get_state(self):
+        remaining_time = None
+        if self._timer_timestamp is not None and self._timer_timestamp != 0:
+            remaining_time = 30 - int(time.time() - self._timer_timestamp)
+            if remaining_time == 0:
+              self._timer_timestamp = 0
         state = {
             'game_id': self._game_id,
             'prompt': self._current_prompt,
-            'timer': self._timer_timestamp.strftime('%Y-%m-%dT%H:%M:%S') if self._timer_timestamp is not None else None
+            'remaining_time': remaining_time
         }
         return state
 

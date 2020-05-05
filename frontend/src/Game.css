@@ -1,0 +1,21 @@
+.link {
+  color: #61dafb;
+}
+
+.Game-body {
+  background-color: #F5ECD4;
+  display: grid;
+  min-height: 100vh;
+  grid-template-columns: 1fr 2fr 1fr;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+}
+
+.PromptArea {
+  grid-column-start: 1;
+  grid-column-start: 4;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+}

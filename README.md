@@ -1,4 +1,4 @@
 # Bring Your Own Book
 
 ### Color Palette
-https://coolors.co/303099-7472e3-5d5bde-816744-bc9669
+https://coolors.co/632e28-d73c45-deab66-ecd88b-f5ecd4

@@ -1,16 +1,9 @@
-.App {
-  text-align: center;
-}
-
 .link {
   color: #61dafb;
 }
 
-.root {
-  background-color: #BC9669;
-}
-
 .Lobby-body {
+  background-color: #F5ECD4;
   display: grid;
   min-height: 100vh;
   grid-template-columns: 1fr 2fr 1fr;
@@ -32,4 +25,22 @@
   grid-column-start: 2;
   align-items: center;
   justify-content: center;
+}
+
+.Lobby-button {
+	background-color:#DEAB66;
+	border-radius:10px;
+	display:inline-block;
+	cursor:pointer;
+	padding:12px 31px;
+	text-decoration:none;
+}
+
+.Lobby-button:hover {
+	background-color:#ECD88B;
+}
+
+.Lobby-button:active {
+	position:relative;
+	top:1px;
 }

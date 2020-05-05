@@ -11,6 +11,10 @@ def make_game():
     print(request)
     data = request.json
     game_id = data['game_id']
+    if game_id in games:
+      return make_response(
+          {'message': 'game_id "{}" already exists.'.format(game_id)},
+            400)
     games[game_id] = byob.board.Game(game_id)
     game = games[game_id]
     print('made game {}'.format(game.get_state()))
@@ -43,10 +47,18 @@ def pick_prompt():
     return make_response({})
 
 
+@app.route('/reset-game', methods=['POST'])
+def reset_game():
+    data = request.json
+    game_id = data['game_id']
+    # just making a new instance because fuck it.
+    games[game_id] = byob.board.Game(game_id)
+    return make_response({})
+
+
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def catch_all(path):
-    # return app.send_static_file('index.html')
     return render_template('index.html')
 
 

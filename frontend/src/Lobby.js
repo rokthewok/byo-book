@@ -16,7 +16,7 @@ class CreateGameForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    if (this.state.gameNameInput != '') {
+    if (this.state.gameNameInput !== '') {
       fetch('/make-game', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -43,7 +43,7 @@ class CreateGameForm extends React.Component {
       <form onSubmit={this.handleSubmit}>
         <input type="text" value={this.state.gameNameInput}
               onChange={this.handleChangeGameNameInput} />
-        <input type="submit" value="Create Game" />
+        <input className="button" type="submit" value="Create Game" />
       </form>
       </div>
       );
@@ -56,7 +56,7 @@ class Lobby extends React.Component {
     return (
       <div className="Lobby-body">
         <div className="Lobby-header">
-          <h1>Bring Your Own book</h1>
+          <h1>Bring Your Own Book</h1>
         </div>
         <div />
           <CreateGameForm history={this.props.history}/>
