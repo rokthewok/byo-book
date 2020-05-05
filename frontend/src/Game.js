@@ -9,7 +9,8 @@ class AdminArea extends React.Component {
     this.handleReset = this.handleReset.bind(this);
   }
 
-  handleNewPrompt() {
+  handleNewPrompt(event) {
+    event.preventDefault();
     fetch('/pick-prompt', {
       method: 'POST',
       headers: {
@@ -28,7 +29,8 @@ class AdminArea extends React.Component {
     });
   }
 
-  handleReset() {
+  handleReset(event) {
+    event.preventDefault();
     fetch('/reset-game', {
       method: 'POST',
       headers: {
@@ -79,11 +81,31 @@ class PromptArea extends React.Component {
 class Countdown extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {remaining_time: undefined};
+    this.countdown = this.countdown.bind(this);
+    if (this.props.timer_timestamp !== null &&
+          this.props.timer_timestamp !== undefined) {
+      this.startTimer();
+    }
+  }
+
+  startTimer() {
+    this.timer = setInterval(this.countdown, 10);
+  }
+
+  countdown() {
+    let remaining_time = 30000 - (Date.now() - this.props.timer_timestamp);
+    if (remaining_time < 0) {
+      this.setState({remaining_time: (0.00).toFixed(2)});
+      clearInterval(this.timer);
+    } else {
+      this.setState({'remaining_time': (remaining_time / 1000.0).toFixed(2)});
+    }
   }
 
   render() {
     return (
-      <h1>{this.props.time}</h1>
+      <h1 className="timer">{this.state.remaining_time}</h1>
     );
   }
 }
@@ -117,12 +139,12 @@ class TimerArea extends React.Component {
   render() {
     return (
       <div className="StartTimerButton">
-        {this.props.remaining_time === null ?
+        {this.props.timer_timestamp === null ?
           <form onSubmit={this.onStartTimer}>
             <input className="button" type="submit" value="Start Timer" />
           </form>
           :
-          <Countdown time={this.props.remaining_time} />
+          <Countdown timer_timestamp={this.props.timer_timestamp} />
         }
       </div>
     );
@@ -153,16 +175,17 @@ class Game extends React.Component {
         }
         return response.json();
       }).then(resp_body => {
+        console.log(JSON.stringify(resp_body));
         this.setState({
           game_id: resp_body.game_id,
           prompt: resp_body.prompt,
-          remaining_time: resp_body.remaining_time
+          timer_timestamp: resp_body.timer_timestamp
         });
         if (resp_body.is_admin === true) {
           this.setState({is_admin: true});
         }
       }).then(() => {
-        setTimeout(() => { this.refresh(); }, 950);
+        setTimeout(() => { this.refresh(); }, 750);
       }).catch(error => {
         console.log(error);
       });
@@ -175,7 +198,7 @@ class Game extends React.Component {
           <PromptArea prompt={this.state.prompt} />
         </div>
         <div>
-          <TimerArea remaining_time={this.state.remaining_time}
+          <TimerArea timer_timestamp={this.state.timer_timestamp}
                      game_id={this.props.match.params.game_id} />
         </div>
         <div>

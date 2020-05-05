@@ -1,9 +1,12 @@
-from flask import Flask, request, make_response, render_template
+from flask import Flask, request, make_response, render_template, session
 import byob.board
 
 
 app = Flask(__name__)
 games = dict()
+
+
+app.secret_key = b'bladdseh'
 
 
 @app.route('/make-game', methods=['POST'])
@@ -17,6 +20,7 @@ def make_game():
             400)
     games[game_id] = byob.board.Game(game_id)
     game = games[game_id]
+    session['game_id'] = game_id
     print('made game {}'.format(game.get_state()))
     return make_response(game.get_state())
 
@@ -26,7 +30,10 @@ def game_state():
     data = request.json
     game_id = data['game_id']
     game = games[game_id]
-    return make_response(game.get_state())
+    state = game.get_state()
+    if session.get('game_id') is not None and session['game_id'] == game_id:
+        state['is_admin'] = True
+    return make_response(state)
 
 
 @app.route('/start-timer', methods=['POST'])

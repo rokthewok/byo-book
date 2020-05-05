@@ -25,22 +25,17 @@ class Game:
         self._current_prompt = self._prompts.pop()
 
     def start_timer(self):
-        self._timer_timestamp = time.time()
+        self._timer_timestamp = time.time() * 1000.0
 
     @property
     def current_prompt(self):
         return self._current_prompt
 
     def get_state(self):
-        remaining_time = None
-        if self._timer_timestamp is not None and self._timer_timestamp != 0:
-            remaining_time = 30 - int(time.time() - self._timer_timestamp)
-            if remaining_time == 0:
-              self._timer_timestamp = 0
         state = {
             'game_id': self._game_id,
             'prompt': self._current_prompt,
-            'remaining_time': remaining_time
+            'timer_timestamp': self._timer_timestamp
         }
         return state
 
