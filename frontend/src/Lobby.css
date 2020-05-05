@@ -1,0 +1,35 @@
+.App {
+  text-align: center;
+}
+
+.link {
+  color: #61dafb;
+}
+
+.root {
+  background-color: #BC9669;
+}
+
+.Lobby-body {
+  display: grid;
+  min-height: 100vh;
+  grid-template-columns: 1fr 2fr 1fr;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+}
+
+.Lobby-header {
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 1;
+  grid-row-end: 3;
+  text-align: center;
+}
+
+.Lobby-form {
+  display: flex;
+  grid-column-start: 2;
+  align-items: center;
+  justify-content: center;
+}

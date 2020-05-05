@@ -1,4 +1,4 @@
-from flask import Flask, request, make_response
+from flask import Flask, request, make_response, render_template
 import byob.board
 
 
@@ -8,16 +8,18 @@ games = dict()
 
 @app.route('/make-game', methods=['POST'])
 def make_game():
-    data = request.json()
+    print(request)
+    data = request.json
     game_id = data['game_id']
     games[game_id] = byob.board.Game(game_id)
     game = games[game_id]
+    print('made game {}'.format(game.get_state()))
     return make_response(game.get_state())
 
 
 @app.route('/game-state', methods=['POST'])
 def game_state():
-    data = request.json()
+    data = request.json
     game_id = data['game_id']
     game = games[game_id]
     return make_response(game.get_state())
@@ -25,7 +27,7 @@ def game_state():
 
 @app.route('/start-timer', methods=['POST'])
 def start_timer():
-    data = request.json()
+    data = request.json
     game_id = data['game_id']
     game = games[game_id]
     game.start_timer()
@@ -34,7 +36,7 @@ def start_timer():
 
 @app.route('/pick-prompt', methods=['POST'])
 def pick_prompt():
-    data = request.json()
+    data = request.json
     game_id = data['game_id']
     game = games[game_id]
     game.pick_prompt()
@@ -44,7 +46,8 @@ def pick_prompt():
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def catch_all(path):
-    return app.send_static_file('index.html')
+    # return app.send_static_file('index.html')
+    return render_template('index.html')
 
 
 def get_rules():

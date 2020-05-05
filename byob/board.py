@@ -35,7 +35,7 @@ class Game:
         state = {
             'game_id': self._game_id,
             'prompt': self._current_prompt,
-            'timer': self._timer_timestamp.strftime('%Y-%m-%dT%H:%M:%S')
+            'timer': self._timer_timestamp.strftime('%Y-%m-%dT%H:%M:%S') if self._timer_timestamp is not None else None
         }
         return state
 
