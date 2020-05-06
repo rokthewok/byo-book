@@ -20,6 +20,29 @@
   font-size: calc(10px + 2vmin);
 }
 
+.PromptArea h1 {
+  text-align: center;
+}
+
 .timer {
-  font-size: calc(15px + 2vmin);
+  font-size: calc(30px + 2vmin);
+  color: #D73C45;
+}
+
+.TimerArea {
+  grid-column-start: 2;
+  grid-row-start: 2;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  text-align: center;
+}
+
+.AdminArea {
+  grid-column-start: 2;
+  grid-row-start: 3;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  text-align: center;
 }

@@ -1,4 +1,4 @@
-import byob.byob
+import byob
 
 
-byob.byob.app.run()
+byob.create_app().run()

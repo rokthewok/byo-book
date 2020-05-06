@@ -1,15 +1,12 @@
-from flask import Flask, request, make_response, render_template, session
+from flask import request, make_response, render_template, session, Blueprint
 import byob.board
 
 
-app = Flask(__name__)
+game_blueprint = Blueprint('byob', __name__)
 games = dict()
 
 
-app.secret_key = b'bladdseh'
-
-
-@app.route('/make-game', methods=['POST'])
+@game_blueprint.route('/make-game', methods=['POST'])
 def make_game():
     print(request)
     data = request.json
@@ -25,7 +22,7 @@ def make_game():
     return make_response(game.get_state())
 
 
-@app.route('/game-state', methods=['POST'])
+@game_blueprint.route('/game-state', methods=['POST'])
 def game_state():
     data = request.json
     game_id = data['game_id']
@@ -36,7 +33,7 @@ def game_state():
     return make_response(state)
 
 
-@app.route('/start-timer', methods=['POST'])
+@game_blueprint.route('/start-timer', methods=['POST'])
 def start_timer():
     data = request.json
     game_id = data['game_id']
@@ -45,7 +42,7 @@ def start_timer():
     return make_response({})
 
 
-@app.route('/pick-prompt', methods=['POST'])
+@game_blueprint.route('/pick-prompt', methods=['POST'])
 def pick_prompt():
     data = request.json
     game_id = data['game_id']
@@ -54,7 +51,7 @@ def pick_prompt():
     return make_response({})
 
 
-@app.route('/reset-game', methods=['POST'])
+@game_blueprint.route('/reset-game', methods=['POST'])
 def reset_game():
     data = request.json
     game_id = data['game_id']
@@ -63,8 +60,8 @@ def reset_game():
     return make_response({})
 
 
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
+@game_blueprint.route('/', defaults={'path': ''})
+@game_blueprint.route('/<path:path>')
 def catch_all(path):
     return render_template('index.html')
 

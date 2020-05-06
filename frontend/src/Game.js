@@ -1,5 +1,5 @@
 import React from 'react';
-import './Lobby.css';
+import './Game.css';
 import { withRouter } from 'react-router-dom';
 
 class AdminArea extends React.Component {
@@ -138,7 +138,7 @@ class TimerArea extends React.Component {
 
   render() {
     return (
-      <div className="StartTimerButton">
+      <div className="TimerArea">
         {this.props.timer_timestamp === null ?
           <form onSubmit={this.onStartTimer}>
             <input className="button" type="submit" value="Start Timer" />
@@ -194,19 +194,12 @@ class Game extends React.Component {
   render() {
     return (
       <div className="Game-body">
-        <div> 
-          <PromptArea prompt={this.state.prompt} />
-        </div>
-        <div>
-          <TimerArea timer_timestamp={this.state.timer_timestamp}
-                     game_id={this.props.match.params.game_id} />
-        </div>
-        <div>
+        <PromptArea prompt={this.state.prompt} />
+        <TimerArea timer_timestamp={this.state.timer_timestamp}
+                   game_id={this.props.match.params.game_id} />
         {this.state.is_admin &&
           <AdminArea game_id={this.props.match.params.game_id} />
         }
-        </div>
-        <div />
       </div>
     );
   }
