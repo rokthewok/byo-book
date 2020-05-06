@@ -83,6 +83,9 @@ class Countdown extends React.Component {
     super(props);
     this.state = {remaining_time: undefined};
     this.countdown = this.countdown.bind(this);
+  }
+
+  componentDidUpdate() {
     if (this.props.timer_timestamp !== null &&
           this.props.timer_timestamp !== undefined) {
       this.startTimer();
