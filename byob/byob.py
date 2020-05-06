@@ -6,6 +6,11 @@ game_blueprint = Blueprint('byob', __name__)
 games = dict()
 
 
+@game_blueprint.route('/health', methods=['GET'])
+def health_check():
+    return make_response({})
+
+
 @game_blueprint.route('/make-game', methods=['POST'])
 def make_game():
     print(request)

@@ -9,9 +9,6 @@ WORKDIR /byo-book/frontend
 RUN npm install
 RUN npm run build
 
-RUN ln -s /byo-book/frontend/build/static /byo-book/byob/static 
-RUN ln -s /byo-book/frontend/build /byo-book/byob/templates
-
 # We've built our frontend, we don't need the dev dependencies.
 RUN rm -rf /byo-book/frontend/node_modules
 
@@ -20,6 +17,9 @@ FROM python:3.8
 WORKDIR /
 
 COPY --from=js_setup /byo-book .
+
+RUN ln -s /frontend/build/static /byob/static 
+RUN ln -s /frontend/build /byob/templates
 
 RUN apt-get update
 RUN apt-get install -y --no-install-recommends \
