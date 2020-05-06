@@ -16,7 +16,9 @@ FROM python:3.8
 
 WORKDIR /
 
-COPY --from=js_setup /byo-book .
+COPY . /
+
+COPY --from=js_setup /byo-book /
 
 RUN ln -s /frontend/build/static /byob/static 
 RUN ln -s /frontend/build /byob/templates
@@ -38,5 +40,7 @@ COPY /config/nginx.conf /etc/nginx
 COPY /config/flask-site-nginx.conf /etc/nginx/conf.d/
 COPY /config/uwsgi.ini /etc/uwsgi/
 COPY /config/supervisord.conf /etc/
+
+WORKDIR /
 
 ENTRYPOINT ["/usr/bin/supervisord"]
