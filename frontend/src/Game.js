@@ -2,6 +2,34 @@ import React from 'react';
 import './Game.css';
 import { withRouter } from 'react-router-dom';
 
+class RulesArea extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleToggle = this.handleToggle.bind(this);
+    this.state = {show_rules: false};
+  }
+
+  handleToggle() {
+    this.setState({show_rules: !this.state.show_rules});
+  }
+
+  render() {
+    return (
+      <div className="RulesArea">
+        {
+          this.state.show_rules ?
+          <div>
+            <text className="RulesText">{this.props.rules}</text>
+          </div>
+        }
+        <form onSubmit={this.handleToggle}>
+          <input className="button" type="submit" value={this.state.show_rules ? "Hide Rules" : "Show Rules"} />
+        </form>
+      </div>
+    );
+  }
+}
+
 class AdminArea extends React.Component {
   constructor(props) {
     super(props);
@@ -87,7 +115,8 @@ class Countdown extends React.Component {
 
   componentDidUpdate() {
     if (this.props.timer_timestamp !== null &&
-          this.props.timer_timestamp !== undefined) {
+          this.props.timer_timestamp !== undefined &&
+          (this.timer === null || this.timer === undefined)) {
       this.startTimer();
     }
   }
@@ -101,6 +130,7 @@ class Countdown extends React.Component {
     if (remaining_time < 0) {
       this.setState({remaining_time: (0.00).toFixed(2)});
       clearInterval(this.timer);
+      this.timer = undefined;
     } else {
       this.setState({'remaining_time': (remaining_time / 1000.0).toFixed(2)});
     }
@@ -188,9 +218,10 @@ class Game extends React.Component {
           this.setState({is_admin: true});
         }
       }).then(() => {
-        setTimeout(() => { this.refresh(); }, 750);
+        setTimeout(() => { this.refresh(); }, 1000);
       }).catch(error => {
         console.log(error);
+        setTimeout(() => { this.refresh(); }, 1000);
       });
   }
 
