@@ -1,5 +1,5 @@
 # Bring Your Own Book
-A simple web server implementation of the game, [Bring Your Own Book](https://www.bringyourownbook.com/).
+A simple web implementation of the game, [Bring Your Own Book](https://www.bringyourownbook.com/).
 
 ## Setup
 ```
